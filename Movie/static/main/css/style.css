@@ -1,0 +1,283 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+nav {
+    background-color: #222;
+    text-align: center;
+    padding: 10px 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    text-align: center;
+    margin: 30px 0;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.section-filmes {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+.filme {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    max-width: 300px;
+    flex: 1 1 300px;
+}
+
+.filme img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.filme button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.filme button:hover {
+    background-color: #555;
+}
+
+.filme p {
+    font-size: 14px;
+    color: #444;
+}
+
+.filme h2, .filme h3 {
+    margin: 10px 0;
+    color: #111;
+}
+
+.filme ol {
+    padding-left: 20px;
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #ccc;
+    text-transform: uppercase;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+footer {
+    background-color: green;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.biografia-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: #f5f5f5;
+    min-height: 70vh;
+}
+
+.biografia-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    max-width: 800px;
+    padding: 30px;
+    text-align: center;
+}
+
+.biografia-card img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.biografia-info h1 {
+    margin-bottom: 20px;
+    color: #222;
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+
+.biografia-info p {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .biografia-card {
+        flex-direction: row;
+        text-align: left;
+        gap: 40px;
+    }
+
+    .biografia-card img {
+        margin-bottom: 0;
+        max-width: 250px;
+    }
+
+    .biografia-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .biografia-info p {
+        max-width: 100%;
+        margin: 0;
+    }
+}
+
+.genero-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: #f5f5f5;
+    min-height: 70vh;
+}
+
+.genero-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    max-width: 800px;
+    padding: 30px;
+    text-align: center;
+}
+
+.genero-card img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.genero-info h1 {
+    margin-bottom: 20px;
+    color: #222;
+    text-transform: uppercase;
+    font-size: 2.2rem;
+}
+
+.genero-info p {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+.genero-info h3 {
+    color: #333;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.filmes-lista {
+    list-style-type: disc;
+    padding-left: 20px;
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.filmes-lista li {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.filmes-lista li strong {
+    color: #111;
+    font-weight: bold;
+}
+
+@media (min-width: 768px) {
+    .genero-card {
+        flex-direction: row;
+        text-align: left;
+        gap: 40px;
+    }
+
+    .genero-card img {
+        margin-bottom: 0;
+        max-width: 300px;
+    }
+
+    .genero-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .genero-info p {
+        max-width: 100%;
+        margin: 0 0 30px 0;
+    }
+
+    .filmes-lista {
+        max-width: 100%;
+        padding-left: 30px;
+    }
+}

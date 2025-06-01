@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Detalhes do Gênero - {{ genero.nome }}{% endblock %}
+
+{% block content %}
+<div class="genero-container">
+    <div class="genero-card">
+        <div class="genero-info">
+            <h1>{{ genero.nome }}</h1>
+            <p>{{ genero.descricao }}</p>
+
+            <h3>Filmes relacionados:</h3>
+            <ul class="filmes-lista">
+                {% for filme in genero.filme_set.all %}
+                <li>
+                    <strong>{{ filme.titulo }}</strong><br>
+                    <small>{{ filme.sinopse }}</small>
+                </li>
+                {% empty %}
+                <li>Nenhum filme cadastrado para este gênero.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

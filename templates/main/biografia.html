@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+
+{% block title %}Biografia - {{ pessoa.nome }}{% endblock %}
+
+{% block content %}
+    <section class="biografia-container">
+        <div class="biografia-card">
+            <img src="{{ pessoa.foto.url }}" alt="Foto de {{ pessoa.nome }}">
+            <div class="biografia-info">
+                <h1>{{ pessoa.nome }}</h1>
+                <p>{{ pessoa.bio }}</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
