@@ -12,7 +12,10 @@
 
                 <img src="{{ filme.capa.url }}">
                 <p>{{ filme.sinopse }}</p>
-                <button>Alugar</button>
+                <form method="post" action="{% url 'main:alugar' filme.pk  %}">
+                    {% csrf_token %}
+                    <button>Alugar</button>
+                </form>
                 <h3>Elenco: </h3>
 
                 <ol>

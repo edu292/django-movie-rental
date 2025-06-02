@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+<section class="perfil-container">
+    <div class="perfil-card">
+        <h1>Perfil de {{ user.username }}</h1>
+
+        {% if alugueis %}
+            <h2>Filmes Alugados</h2>
+            <div class="filmes-alugados-grid">
+                {% for aluguel in alugueis %}
+                    <div class="filme-alugado">
+                        <img src="{{ aluguel.filme.capa.url }}" alt="{{ aluguel.filme.titulo }}">
+                        <div class="filme-info">
+                            <h3>{{ filme.titulo }}</h3>
+                            <p>Data de Aluguel: {{ aluguel.data_aluguel|date:"d/m/Y" }}</p>
+                            <form method="post" action="{% url 'main:devolver' aluguel.pk %}">
+                                {% csrf_token %}
+                                <button type="submit">Devolver</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Você ainda não alugou nenhum filme.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
