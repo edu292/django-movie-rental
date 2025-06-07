@@ -39,8 +39,16 @@ def genero(request, nome):
     return render(request, 'main/genero.html', {'genero': genero})
 
 def generos(request):
-    generos = Genero.objects.all()[:8]
-    return render(request, 'main/generos.html', {'generos': generos})
+    query = request.GET.get('q')
+    if query:
+        pessoas = Genero.objects.filter(nome__icontains=query)
+    else:
+        pessoas = Genero.objects.all()[:8]
+    context = {
+        'generos': pessoas,
+        'query': query,
+    }
+    return render(request, 'main/generos.html', context)
 
 def filme(request, titulo):
     filme = get_object_or_404(Filme, titulo=unquote(titulo))

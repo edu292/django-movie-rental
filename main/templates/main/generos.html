@@ -3,8 +3,8 @@
 
 {% block content %}
     <h1>Gêneros</h1>
-    {% if generos %}
-        <section class="section-container">
+    <section class="section-container">
+        {% if generos %}
             {% for genero in generos %}
                 <a href="{% url 'main:genero' genero.nome %}" class="card card--genero-link">
                     <h2>{{ genero.nome }}</h2>
@@ -14,10 +14,11 @@
                     {% endif %}
                 </a>
             {% endfor %}
-        </section>
-    {% else %}
-        <p style="text-align: center; color: white; font-size: 1.2em; padding: 50px;">
-            Nenhum gênero cadastrado no momento.
-        </p>
+        {% else %}
+            <div class="empty-state-message">
+                <h2>Nenhuma biografia encontrada</h2>
+                <p>Não encontramos ninguém com o nome "{{ query }}". Tente uma busca diferente.</p>
+            </div>
     {% endif %}
+    </section>
 {% endblock %}
