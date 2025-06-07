@@ -2,27 +2,34 @@
 
 {% block title %}Top 5{% endblock %}
 {% block content %}
-    <h3>Os 5 filmes mais assistidos na cidade</h3>
-        <table>
-            <tr>
-                <th>Título</th>
-                <th>Gênero</th>
-                <th>Direção</th>
-            </tr>
-            {% for filme in filmes %}
+    <h1>Os 5 filmes mais assistidos na cidade</h1>
+
+    <div class="panel panel--tabela">
+        <table class="data-table">
+            <thead>
                 <tr>
-                    <td>{{ filme.titulo }}</td>
-                    <td>
-                        {% for genero in filme.genero.all %}
-                            <a href="{% url 'main:genero' genero.nome %}">{{ genero.nome }}</a>{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </td>
-                <td>
-                    {% for diretor in filme.direcao.all %}
-                        <a href="{% url 'main:biografia' diretor.nome|urlencode %}">{{ diretor.nome }}</a>{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </td>
+                    <th>Título</th>
+                    <th>Gênero</th>
+                    <th>Direção</th>
                 </tr>
-            {% endfor %}
+            </thead>
+            <tbody>
+                {% for filme in filmes %}
+                    <tr>
+                        <td><a href="{% url 'main:filme' filme.titulo|urlencode %}">{{ filme.titulo }}</a></td>
+                        <td>
+                            {% for genero in filme.genero.all %}
+                                <a href="{% url 'main:genero' genero.nome %}">{{ genero.nome }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for diretor in filme.direcao.all %}
+                                <a href="{% url 'main:biografia' diretor.nome|urlencode %}">{{ diretor.nome }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
+    </div>
 {% endblock %}

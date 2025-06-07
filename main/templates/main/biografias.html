@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% block title %}Biografias{% endblock %}
+
+{% block content %}
+    <h1>Biografias</h1>
+
+    <section class="section-container">
+        {% if pessoas %}
+            {% for pessoa in pessoas %}
+                <a href="{% url 'main:biografia' pessoa.nome|urlencode %}" class="card card--biografia-preview">
+                    <img src="{{ pessoa.foto.url }}" alt="Foto de {{ pessoa.nome }}">
+                    <div class="bio-preview-info">
+                        <h3>{{ pessoa.nome }}</h3>
+                        <p>{{ pessoa.bio|truncatewords:12 }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state-message empty-state-message--light-bg">
+                <h2>Nenhuma biografia encontrada</h2>
+                <p>Não encontramos ninguém com o nome "{{ query }}". Tente uma busca diferente.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

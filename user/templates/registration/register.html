@@ -3,9 +3,41 @@
 {% block title %}Registrar Conta{% endblock %}
 
 {% block content %}
-    <form method="post" class="registration">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Registrar</button>
-    </form>
+<main class="page-container">
+    <div class="form-container">
+        <h1>Criar Nova Conta</h1>
+        <p style="text-align: center; margin-top: -20px; margin-bottom: 30px; color: #666;">Junte-se a nós para descobrir e alugar os melhores filmes!</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="errorlist">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-field">
+                    {{ field.label_tag }}
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <div class="helptext">
+                            {{ field.help_text|safe }}
+                        </div>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <p class="errorlist">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn--primary">Registrar</button>
+        </form>
+    </div>
+</main>
 {% endblock %}

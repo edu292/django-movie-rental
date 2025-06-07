@@ -10,5 +10,8 @@ urlpatterns = [
     path('genero/<str:nome>', views.genero, name='genero'),
     path('alugar/<int:pk>', views.alugar, name='alugar'),
     path('perfil', views.perfil, name='perfil'),
-    path('devolver/<int:pk>', views.devolver, name='devolver')
+    path('devolver/<int:pk>', views.devolver, name='devolver'),
+    path('biografias', views.biografias, name='biografias'),
+    path('generos', views.generos, name='generos'),
+    path('filme/<str:titulo>', views.filme, name='filme')
 ]
