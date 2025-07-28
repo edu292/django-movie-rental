@@ -1,0 +1,41 @@
+{% extends base_template %}
+
+{% block title %}{{ filme.titulo }}{% endblock %}
+
+{% block content %}
+<main class="page-container">
+    <div class="card card--detalhe-filme">
+
+        <div class="detalhe-poster">
+            <img src="{{ filme.capa.url }}" alt="Pôster do filme {{ filme.titulo }}">
+        </div>
+
+        <div class="detalhe-info">
+            <h1>{{ filme.titulo }}</h1>
+
+            <ul class="detalhe-meta">
+                <li>Duração: {{ filme.duracao }} minutos</li>
+                <li>
+                    Direção:
+                    {% for diretor in filme.direcao.all %}
+                        <a href="{% url 'main:biografia' diretor.slug %}">{{ diretor.nome }}</a>{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                </li>
+            </ul>
+
+            <h2>Sinopse</h2>
+            <p class="info-descricao">{{ filme.sinopse }}</p>
+
+            <div class="list-section">
+                <h3 class="list-section__title">Elenco Principal</h3>
+                <ul class="c-list c-list--tags">
+                    {% for ator in filme.elenco.all %}
+                        <li class="c-list__item"><a href="{% url 'main:biografia' ator.slug %}" class="c-list__link">{{ ator.nome }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button hx-post="{% url 'main:aluguel' filme.pk %}" class="btn btn--primary btn--grande">Alugar</button>
+        </div>
+    </div>
+</main>
+{% endblock %}

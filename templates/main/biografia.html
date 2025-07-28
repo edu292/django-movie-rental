@@ -1,0 +1,41 @@
+{% extends base_template %}
+
+{% block title %}Biografia - {{ pessoa.nome }}{% endblock %}
+
+{% block content %}
+<main class="page-container">
+    <div class="card card--biografia">
+        <img src="{{ pessoa.foto.url }}" alt="Foto de {{ pessoa.nome }}">
+        <div class="biografia-info">
+            <h1>{{ pessoa.nome }}</h1>
+            <p>{{ pessoa.bio }}</p>
+
+            <div class="list-section">
+
+                {% if pessoa.filmes_atuados.all %}
+                    <h3 class="list-section__title">Como Ator/Atriz</h3>
+                    <ul class="c-list c-list--tags">
+                        {% for filme in pessoa.filmes_atuados.all %}
+                            <li class="c-list__item">
+                                <a href="{% url 'main:filme' filme.slug %}" class="c-list__link">{{ filme.titulo }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if pessoa.filmes_dirigidos.all %}
+                    <h3 class="list-section__title">Como Diretor(a)</h3>
+                    <ul class="c-list c-list--tags">
+                        {% for filme in pessoa.filmes_dirigidos.all %}
+                            <li class="c-list__item">
+                                <a href="{% url 'main:filme' filme.slug %}" class="c-list__link">{{ filme.titulo }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

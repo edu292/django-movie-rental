@@ -1,0 +1,35 @@
+{% extends base_template %}
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+<section class="page-container">
+    <div class="card card--perfil">
+        <h1 class="info-titulo">Perfil de {{ user.username }}</h1>
+
+        {% if alugueis %}
+            <h2>Filmes Alugados</h2>
+            <div class="filmes-alugados-grid">
+                {% for aluguel in alugueis %}
+                    <div class="card card--filme-alugado">
+                        <img src="{{ aluguel.filme.capa.url }}" alt="{{ aluguel.filme.titulo }}">
+                        <div class="filme-info">
+                            <h3>
+                                <a href="{% url 'main:filme' aluguel.filme.slug %}" class="card-stretched-link">
+                                    {{ aluguel.filme.titulo }}
+                                </a>
+                            </h3>
+                            <p>Data de Aluguel: {{ aluguel.data_aluguel|date:"d/m/Y" }}</p>
+                            <button hx-delete="{% url 'main:aluguel' aluguel.pk %}" class="btn btn--secondary">Devolver</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state-message empty-state-message--light-bg">
+                <h2>Nenhum Filme Alugado</h2>
+                <p>Que tal explorar nosso catálogo e encontrar sua próxima aventura?</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

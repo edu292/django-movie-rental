@@ -1,0 +1,45 @@
+{% load django_htmx %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/style.min.css' %}">
+    {% htmx_script %}
+</head>
+<body hx-boost="true" hx-target=".main-content-wrapper" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+    <nav>
+        <div class="nav-left">
+            <form method="get" role="search" hx-get="" hx-on::after-request="if(event.detail.successful) this.reset()">
+                <input type="text" placeholder="Digite a pesquisa" name="q" >
+                <button type="submit">Pesquisar</button>
+            </form>
+        </div>
+        <div class="nav-center">
+            <a href="{% url 'main:home' %}" class="nav-link">Home</a>
+            <a href="{% url 'main:top5' %}" class="nav-link">Top 5</a>
+            <a href="{% url 'main:generos' %}" class="nav-link">Gêneros</a>
+            <a href="{% url 'main:biografias' %}" class="nav-link">Biografias</a>
+        </div>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <a href="{% url 'main:perfil' %}" class="nav-link">Meu Perfil</a>
+                <a class="nav-link" hx-post="{% url 'user:logout' %}" href="{% url 'user:logout' %}">Sair</a>
+            {% else %}
+                <a href="{% url 'user:login' %}" class="nav-link">Entrar</a>
+            {% endif %}
+        </div>
+    </nav>
+    <main class="main-content-wrapper">
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

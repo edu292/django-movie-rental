@@ -1,11 +1,20 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, reverse, redirect
-from urllib.parse import unquote
 
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_http_methods, require_GET
+from django_htmx.http import HttpResponseLocation
 
 from .models import Filme, Pessoa, Genero, Aluguel
 
+from django.http import HttpRequest as HttpRequestBase
+from django_htmx.middleware import HtmxDetails
+
+
+class HttpRequest(HttpRequestBase):
+    htmx: HtmxDetails
+
+
+@require_GET
 def home(request):
     query = request.GET.get("q")
     if query:
@@ -14,10 +23,14 @@ def home(request):
         filmes = Filme.objects.all()[:3]
     return render(request, 'main/home.html', {'filmes': filmes})
 
+
+@require_GET
 def top5(request):
     filmes = Filme.objects.all()[:5]
     return render(request, 'main/top5.html', context={'filmes': filmes})
 
+
+@require_GET
 def biografias(request):
     query = request.GET.get('q')
     if query:
@@ -30,14 +43,20 @@ def biografias(request):
     }
     return render(request, 'main/biografias.html', context)
 
-def biografia(request, nome):
-    pessoa = get_object_or_404(Pessoa, nome=unquote(nome))
+
+@require_GET
+def biografia(request, slug):
+    pessoa = get_object_or_404(Pessoa, slug=slug)
     return render(request, "main/biografia.html", {"pessoa": pessoa})
 
-def genero(request, nome):
-    genero = get_object_or_404(Genero, nome=unquote(nome))
+
+@require_GET
+def genero(request, slug):
+    genero = get_object_or_404(Genero, slug=slug)
     return render(request, 'main/genero.html', {'genero': genero})
 
+
+@require_GET
 def generos(request):
     query = request.GET.get('q')
     if query:
@@ -50,25 +69,27 @@ def generos(request):
     }
     return render(request, 'main/generos.html', context)
 
-def filme(request, titulo):
-    filme = get_object_or_404(Filme, titulo=unquote(titulo))
+
+@require_GET
+def filme(request, slug):
+    filme = get_object_or_404(Filme, slug=slug)
     return render(request, 'main/filme.html', {'filme': filme})
 
+
+@require_http_methods(['POST', 'DELETE'])
 @login_required
-def alugar(request, pk):
-    filme = get_object_or_404(Filme, pk=pk)
-    Aluguel.objects.create(usuario=request.user, filme=filme)
-    return redirect(reverse('main:perfil'))
+def aluguel(request, pk):
+    if request.method == 'POST':
+        filme = get_object_or_404(Filme, pk=pk)
+        Aluguel.objects.create(usuario=request.user, filme=filme)
+    else:
+        aluguel = get_object_or_404(Aluguel, pk=pk, usuario=request.user)
+        aluguel.delete()
+
+    return HttpResponseLocation(reverse('main:perfil'))
 
 
 @login_required
 def perfil(request):
     alugueis = Aluguel.objects.filter(usuario=request.user)
     return render(request, 'main/perfil.html', {'alugueis': alugueis})
-
-@require_POST
-def devolver(request, pk):
-    Aluguel.objects.get(pk=pk).delete()
-    return redirect(reverse('main:perfil'))
-
-

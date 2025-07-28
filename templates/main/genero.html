@@ -1,0 +1,31 @@
+{% extends base_template %}
+
+{% block title %}Detalhes do Gênero - {{ genero.nome }}{% endblock %}
+
+{% block content %}
+<div class="page-container"> <div class="card card--genero-detalhe">
+
+        <div class="genero-coluna-info">
+            <h1 class="info-titulo">{{ genero.nome }}</h1>
+            <p class="info-descricao">{{ genero.descricao }}</p>
+        </div>
+
+        <div class="genero-coluna-lista">
+            <h3>Filmes Relacionados</h3>
+            <ul class="c-list c-list--blocks">
+                {% for filme in genero.filme_set.all %}
+                <li class="c-list__item">
+                    <a class="c-list__link" href="{% url 'main:filme' filme.slug %}">
+                        <strong>{{ filme.titulo }}</strong><br>
+                        <small>{{ filme.sinopse|truncatewords:15 }}</small>
+                    </a>
+                </li>
+                {% empty %}
+                <li>Nenhum filme cadastrado para este gênero.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

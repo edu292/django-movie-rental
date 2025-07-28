@@ -6,12 +6,11 @@ app_name = 'main'
 urlpatterns = [
     path('', views.home, name='home'),
     path('top5', views.top5, name='top5'),
-    path('biografia/<str:nome>', views.biografia, name='biografia'),
-    path('genero/<str:nome>', views.genero, name='genero'),
-    path('alugar/<int:pk>', views.alugar, name='alugar'),
+    path('biografia/<str:slug>', views.biografia, name='biografia'),
+    path('genero/<str:slug>', views.genero, name='genero'),
     path('perfil', views.perfil, name='perfil'),
-    path('devolver/<int:pk>', views.devolver, name='devolver'),
+    path('aluguel/<int:pk>', views.aluguel, name='aluguel'),
     path('biografias', views.biografias, name='biografias'),
     path('generos', views.generos, name='generos'),
-    path('filme/<str:titulo>', views.filme, name='filme')
+    path('filme/<str:slug>', views.filme, name='filme')
 ]

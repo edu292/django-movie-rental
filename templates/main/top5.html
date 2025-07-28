@@ -1,0 +1,35 @@
+{% extends base_template %}
+
+{% block title %}Top 5{% endblock %}
+{% block content %}
+    <h1>Os 5 filmes mais acessados no site</h1>
+
+    <div class="panel panel--tabela">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Gênero</th>
+                    <th>Direção</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for filme in filmes %}
+                    <tr>
+                        <td><a href="{% url 'main:filme' filme.slug %}">{{ filme.titulo }}</a></td>
+                        <td>
+                            {% for genero in filme.genero.all %}
+                                <a href="{% url 'main:genero' genero.slug %}">{{ genero.nome }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for diretor in filme.direcao.all %}
+                                <a href="{% url 'main:biografia' diretor.slug %}">{{ diretor.nome }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

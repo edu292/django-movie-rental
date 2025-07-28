@@ -1,0 +1,42 @@
+{% extends base_template %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<main class="page-container">
+    <div class="form-container">
+        <h1>Entrar na sua Conta</h1>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="errorlist">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-field">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="errorlist">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn--primary">Entrar</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <p>Não tem uma conta? <a href="{% url 'user:register' %}">Registre-se aqui!</a></p>
+        </div>
+    </div>
+</main>
+{% endblock %}

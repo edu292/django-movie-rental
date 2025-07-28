@@ -1,0 +1,35 @@
+{% extends base_template %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Filmes em Destaque</h1>
+
+    <section class="section-container">
+        {% if filmes %}
+            {% for filme in filmes %}
+                <article class="card card--filme">
+                    <h2 class="card-title">
+                        <a href="{% url 'main:filme' filme.slug %}" class="card-stretched-link">
+                            {{ filme.titulo }}
+                        </a>
+                    </h2>
+                    <img src="{{ filme.capa.url }}" alt="Capa do filme {{ filme.titulo }}">
+                    <p>{{ filme.sinopse|truncatewords:20 }}</p>
+                    <button hx-post="{% url 'main:aluguel' filme.pk %}" class="btn btn--primary">Alugar</button>
+                    <h3 class="card-subtitle">Elenco:</h3>
+                    <ol class="card-actor-list">
+                        {% for ator in filme.elenco.all %}
+                            <li><a href="{% url 'main:biografia' ator.slug %}">{{ ator.nome }}</a></li>
+                        {% endfor %}
+                    </ol>
+                </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state-message">
+                <h2>Nenhum filme encontrado</h2>
+                <p>Tente outros filmes ou navegue por nossas outras opções.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

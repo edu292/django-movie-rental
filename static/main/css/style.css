@@ -1,0 +1,729 @@
+/* ==========================================================================
+   SETUP E ESTILOS GLOBAIS
+   ========================================================================== */
+:root {
+    /* Cores */
+    --cor-primaria: #a80f12;
+    --cor-primaria-escura: #7c0009;
+    --cor-fundo-nav: #222;
+    --cor-fundo-card: #fff;
+    --cor-fundo-input: #f0f0f0;
+    --cor-botao: #333;
+    --cor-botao-hover: #555;
+    --cor-texto-claro: #fffafa;
+    --cor-texto-escuro: #111;
+    --cor-texto-secundario: #444;
+    --cor-secundaria: #6c757d;
+    --cor-secundaria-escura: #5a6268;
+    /* Tipografia */
+    --fonte-titulo: 'Bebas Neue', sans-serif;
+    --fonte-corpo: 'Inter', sans-serif;
+    /* Unidades */
+    --raio-borda-sm: 5px;
+    --raio-borda-md: 10px;
+    --espacamento-global: 20px;
+    --gap-componente: 30px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: var(--fonte-corpo);
+    line-height: 1.6;
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--fonte-titulo);
+    letter-spacing: 1.1px;
+}
+
+h1 {
+    text-align: center;
+    margin: var(--gap-componente) 0;
+    text-transform: uppercase;
+    font-size: 2.8rem;
+}
+
+/* ==========================================================================
+   LAYOUT HELPERS
+   ========================================================================== */
+.main-content-wrapper {
+    flex-grow: 1;
+    margin-bottom: 60px;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;   /* ADICIONADO: Força o empilhamento vertical (h1 acima da section) */
+    align-items: center;
+    justify-content: center;
+    padding: 40px var(--espacamento-global);
+    min-height: 70vh;
+}
+
+.section-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 320px);
+    justify-content: center;
+    gap: 25px;
+    margin: 0 auto;
+    max-width: 1400px;
+}
+
+.panel {
+    width: 100%;
+    margin: 40px auto;
+    background-color: var(--cor-fundo-card);
+    border-radius: var(--raio-borda-md);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* Ajuste para o max-width específico da tabela */
+.panel--tabela {
+    max-width: 900px;
+}
+
+.filmes-alugados-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+/* ==========================================================================
+   COMPONENT: NAVEGAÇÃO
+   ========================================================================== */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px var(--espacamento-global);
+    background-color: var(--cor-fundo-nav);
+    position: relative;
+}
+
+.nav-left, .nav-center, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-componente);
+}
+
+.nav-link {
+    color: var(--cor-texto-claro);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: var(--fonte-titulo);
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--cor-primaria);
+}
+
+.logout-form button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--cor-texto-claro);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: var(--fonte-titulo);
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.logout-form button:hover {
+    color: var(--cor-primaria);
+}
+
+.nav-left form {
+    display: flex;
+    align-items: center;
+}
+
+.nav-left input[type="text"] {
+    padding: 9px 12px;
+    font-size: 14px;
+    font-family: var(--fonte-corpo);
+    color: var(--cor-texto-escuro);
+    background-color: var(--cor-fundo-input);
+    border: 1px solid #555;
+    border-right: none;
+    border-radius: var(--raio-borda-sm) 0 0 var(--raio-borda-sm);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.nav-left input[type="text"]:focus {
+    background-color: #fff;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 5px rgba(168, 15, 18, 0.5);
+}
+
+.nav-left button[type="submit"] {
+    padding: 9px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: var(--fonte-corpo);
+    color: var(--cor-texto-claro);
+    background-color: var(--cor-botao);
+    border: 1px solid #555;
+    border-radius: 0 var(--raio-borda-sm) var(--raio-borda-sm) 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.nav-left button[type="submit"]:hover {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria-escura);
+}
+
+/* ==========================================================================
+   COMPONENT: CARD
+   ========================================================================== */
+.card {
+    background-color: var(--cor-fundo-card);
+    border-radius: var(--raio-borda-md);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: var(--espacamento-global);
+    color: var(--cor-texto-escuro);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* --- Modificadores e Tipos de Card --- */
+.card--filme, .card--filme-alugado {
+    position: relative;
+}
+.card--filme {
+    max-width: 320px;
+}
+.card--filme-alugado {
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.card--biografia-preview {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--cor-texto-escuro);
+    max-width: 320px;
+    padding: 0;
+    overflow: hidden;
+}
+.card--perfil {
+    max-width: 1100px;
+    width: 100%;
+    padding: var(--gap-componente);
+}
+
+.card--perfil h2 {
+    font-family: var(--fonte-titulo);
+    font-size: 2.2rem;
+    color: var(--cor-texto-escuro);
+    margin-bottom: 25px;
+    border-top: 1px solid #eee;
+    padding-top: 30px;
+    text-align: center;
+}
+
+.card--detalhe-filme {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+}
+.card--biografia, .card--genero-detalhe {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1100px;
+    padding: var(--gap-componente);
+    min-height: 400px;
+}
+
+.card--genero-link,
+.card--genero-link:hover {
+    text-decoration: none;
+}
+
+/* 2. EFEITO OPCIONAL (RECOMENDADO):
+      Para dar um feedback visual de que é um link, aplicamos o sublinhado
+      e uma mudança de cor APENAS no título <h2> quando o mouse passa sobre o card. */
+.card--genero-link:hover h2 {
+    color: var(--cor-primaria);
+    text-decoration: underline;
+    text-decoration-thickness: 2px; /* Deixa o sublinhado um pouco mais espesso */
+}
+
+/* Adicionamos uma transição suave para a mudança de cor do h2 */
+.card--genero-link h2 {
+    transition: color 0.2s ease-in-out;
+}
+
+/* --- Conteúdo Interno dos Cards --- */
+.card--biografia-preview img {
+    width: 100%; height: 300px;
+    object-fit: cover;
+    object-position: top center;
+}
+.card--biografia-preview .bio-preview-info { padding: 20px; }
+.card--biografia-preview h3 { font-size: 1.8rem; margin: 0 0 10px 0; }
+.card--biografia-preview p { font-size: 0.9rem; color: var(--cor-texto-secundario); line-height: 1.5; }
+
+/* Stretched Link (Card Clicável) */
+.card-stretched-link { text-decoration: none; color: inherit; }
+.card-stretched-link::after {
+    content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1;
+}
+.card--filme .card-actor-list li a {
+    position: relative; z-index: 2;
+}
+
+/* ========================================= */
+/* Ajuste de Espaçamento na Pág. Detalhe Filme */
+/* ========================================= */
+
+/* Adiciona espaço extra abaixo da seção do elenco, antes do botão de alugar */
+.card--detalhe-filme .list-section {
+    margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   COMPONENT: BOTÃO (BTN)
+   ========================================================================== */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-family: var(--fonte-corpo);
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cor-texto-claro);
+    background-color: var(--cor-botao);
+    border: 1px solid transparent;
+    border-radius: var(--raio-borda-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+.btn:hover { background-color: var(--cor-botao-hover); }
+.btn--primary { background-color: var(--cor-primaria); }
+.btn--primary:hover { background-color: var(--cor-primaria-escura); }
+.btn--secondary {
+    background-color: var(--cor-secundaria);
+    border-color: var(--cor-secundaria);
+}
+.btn--secondary:hover {
+    background-color: var(--cor-secundaria-escura);
+    border-color: #545b62;
+}
+.btn--grande { padding: 15px 30px; font-size: 1.2rem; }
+
+/* ==========================================================================
+   COMPONENT: LISTA (Tags e Blocos) - VERSÃO FINAL
+   ========================================================================== */
+
+/* 1. O wrapper da seção, para quando uma lista precisa de título. */
+.list-section {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+
+.list-section__title {
+    font-family: var(--fonte-titulo);
+    font-size: 1.5rem;
+    color: var(--cor-texto-escuro);
+    margin: 0 0 15px 0;
+}
+
+/* 2. A classe base para todas as listas. */
+.c-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* ============================================= */
+/* --- MODIFICADOR: Lista de Tags (PÍLULAS)  --- */
+/* ============================================= */
+.c-list--tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.c-list--tags .c-list__item {
+    display: inline-block; /* Necessário para o link dentro funcionar corretamente */
+}
+
+.c-list--tags .c-list__link {
+    display: block;
+    padding: 8px 15px;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+}
+
+.c-list--tags .c-list__link:hover {
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================= */
+/* --- MODIFICADOR: Lista de Blocos          --- */
+/* ============================================= */
+.c-list--blocks .c-list__item {
+    margin-bottom: 10px;
+}
+
+.c-list--blocks .c-list__link {
+    display: block;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: var(--raio-borda-sm);
+    border-left: 4px solid var(--cor-primaria);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.c-list--blocks .c-list__link:hover {
+    background-color: #f0f0f0;
+    border-left-color: var(--cor-primaria-escura);
+    transform: translateX(5px);
+}
+
+.c-list--blocks .c-list__link strong {
+    display: block;
+    font-size: 1.1em;
+    color: var(--cor-texto-escuro);
+    margin-bottom: 4px;
+}
+
+.c-list--blocks .c-list__link small {
+    color: #666;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   COMPONENT: TABELA
+   ========================================================================== */
+
+/* 2. A classe principal da tabela em si. */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--cor-texto-escuro);
+}
+
+/* 3. Estilos do cabeçalho da tabela (thead, th) */
+.data-table th {
+    background-color: var(--cor-fundo-nav);
+    color: var(--cor-texto-claro);
+    padding: 15px 20px;
+    text-align: left;
+    font-family: var(--fonte-titulo);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+}
+
+/* 4. Estilos do corpo e das células da tabela (tbody, td) */
+.data-table td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee; /* Linha sutil para separar as linhas */
+}
+
+/* 5. Estilos para as linhas (tr) */
+.data-table tbody tr:last-child td {
+    border-bottom: none; /* Remove a borda da última linha */
+}
+
+.data-table tbody tr:hover {
+    background-color: #f5f5f5; /* Efeito de hover para feedback visual */
+}
+
+/* 6. Estilos para links dentro da tabela */
+.data-table td a {
+    color: var(--cor-primaria);
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.data-table td a:hover {
+    text-decoration: underline;
+    color: var(--cor-primaria-escura);
+}
+
+/* ==========================================================================
+   Estilos da Lista de Elenco no Card de Filme
+   ========================================================================== */
+
+/* Define o espaçamento e a aparência geral da lista */
+.card-actor-list {
+    padding-left: 20px; /* Indenta a lista para dar espaço aos números */
+    margin-top: 10px;
+    font-size: 0.9rem; /* Deixa o texto da lista um pouco menor */
+}
+
+/* Define o espaçamento entre cada item da lista */
+.card-actor-list li {
+    margin-bottom: 6px;
+    color: var(--cor-texto-secundario); /* Cor para os números da lista */
+}
+
+/* Estilo do link com o nome do ator em estado normal */
+.card-actor-list li a {
+    color: var(--cor-texto-secundario); /* Cor mais suave para não competir com o título */
+    text-decoration: none;
+    font-weight: 500; /* Um peso de fonte semi-bold */
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    text-underline-offset: 3px; /* Afasta um pouco o sublinhado do texto */
+}
+
+/* Efeito ao passar o mouse sobre o link */
+.card-actor-list li a:hover {
+    color: var(--cor-primaria); /* Muda para a cor principal do site */
+    text-decoration: underline;
+}
+
+/* ========================================= */
+/* Componente: Lista de Metadados do Filme   */
+/* ========================================= */
+
+.detalhe-meta {
+    list-style: none;
+    padding: 0;
+    margin: -15px 0 25px 0; /* Margem para ajustar a posição abaixo do título */
+
+    display: flex; /* Coloca os itens lado a lado */
+    flex-wrap: wrap; /* Permite quebrar a linha em telas pequenas */
+    gap: 10px 20px; /* Espaçamento vertical e horizontal entre os itens */
+
+    color: var(--cor-texto-secundario); /* Cor mais suave para informação secundária */
+    font-size: 0.95rem;
+}
+
+.detalhe-meta li {
+    display: flex; /* Alinha o ícone e o texto na mesma linha */
+    align-items: center;
+}
+
+/* Estilo para os ícones (requer Font Awesome) */
+.detalhe-meta .fas {
+    margin-right: 8px;
+    font-size: 0.9rem;
+    color: var(--cor-primaria); /* Dá um toque da cor principal do site */
+}
+
+/* Links dentro da lista de metadados */
+.detalhe-meta a {
+    color: var(--cor-texto-secundario);
+    font-weight: normal;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.detalhe-meta a:hover {
+    text-decoration: underline;
+    color: var(--cor-primaria);
+}
+
+/* ==========================================================================
+   COMPONENT: FORMULÁRIO (Login/Registro)
+   ========================================================================== */
+
+/* 1. O container principal do formulário */
+.form-container {
+    max-width: 500px;
+    margin: 0 auto; /* Centralizado pelo .page-container */
+    padding: 30px 40px;
+    background-color: var(--cor-fundo-card);
+    border-radius: var(--raio-borda-md);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: var(--cor-texto-escuro);
+}
+
+/* 2. Título principal dentro do formulário */
+.form-container h1 {
+    color: var(--cor-texto-escuro);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* 3. O wrapper para cada conjunto de label/input */
+.form-field {
+    margin-bottom: 20px;
+}
+
+/* 4. Estilos para os elementos de cada campo */
+.form-field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #555;
+    text-transform: uppercase;
+}
+
+.form-field input[type="text"],
+.form-field input[type="password"],
+.form-field input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: var(--raio-borda-sm);
+    font-size: 1rem;
+    font-family: var(--fonte-corpo);
+    background-color: #f9f9f9;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Estado de foco para os inputs */
+.form-field input:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(168, 15, 18, 0.15);
+}
+
+/* 5. Estilos para textos de ajuda e validação */
+.form-field .helptext {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.form-field ul {
+    list-style-position: inside;
+    padding-left: 10px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.form-field ul li {
+    margin-bottom: 5px;
+}
+
+/* 6. Estilos para a lista de erros do formulário */
+.errorlist {
+    list-style: none;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: rgba(168, 15, 18, 0.1);
+    border: 1px solid var(--cor-primaria);
+    border-radius: var(--raio-borda-sm);
+    color: var(--cor-primaria-escura);
+    font-size: 0.9rem;
+}
+
+/* 7. Estilos para o botão dentro do formulário */
+.form-container .btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   COMPONENT: EMPTY STATE
+   ========================================================================== */
+.empty-state-message {
+    text-align: center;
+    padding: 80px 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: var(--raio-borda-md);
+}
+.section-container .empty-state-message {
+    grid-column: 1 / -1;
+}
+.empty-state-message h2 { font-size: 2rem; margin-bottom: 10px; }
+.empty-state-message p { font-size: 1.1rem; }
+.empty-state-message--light-bg {
+    background-color: #f8f9fa;
+    color: var(--cor-texto-secundario);
+    border: 1px dashed #ddd;
+}
+.empty-state-message--light-bg h2 {
+    color: var(--cor-texto-escuro);
+}
+
+/* ==========================================================================
+   MEDIA QUERIES (Estilos Responsivos)
+   ========================================================================== */
+@media (min-width: 768px) {
+    /* Layouts de Página */
+    .card--biografia, .card--genero-detalhe {
+        flex-direction: row;
+        text-align: left;
+        gap: 40px;
+    }
+    .card--detalhe-filme {
+        flex-direction: row;
+        gap: 50px;
+    }
+
+    /* Colunas Biografia */
+    .card--biografia img {
+        flex: 0 0 350px;
+        max-width: 350px;
+    }
+    .card--biografia .biografia-info { flex: 1; }
+
+    /* Colunas Gênero */
+    .genero-coluna-info { flex: 1 1 40%; }
+    .genero-coluna-lista { flex: 1 1 60%; }
+
+    /* Colunas Detalhe Filme */
+    .detalhe-poster { flex: 0 0 350px; }
+    .detalhe-info { flex: 1; }
+    .btn--grande { width: auto; }
+}
