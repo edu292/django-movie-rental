@@ -2,22 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 import os
+from functools import partial
 
 
-def get_filename_generator(target_folder):
-    def filename_generator(instance, filename):
-        extension = os.path.splitext(filename)[1]
-        new_filename = instance.slug+extension
-
-        return os.path.join(target_folder, new_filename)
-
-    return filename_generator
+def get_filename_generator(target_folder, instance, filename):
+    extension = os.path.splitext(filename)[1]
+    new_filename = instance.slug+extension
+    return os.path.join(target_folder, new_filename)
 
 
 class Pessoa(models.Model):
     nome = models.CharField(max_length=100)
     bio = models.TextField()
-    foto = models.ImageField(upload_to=get_filename_generator('foto'))
+    foto = models.ImageField(upload_to=partial(get_filename_generator, 'foto'))
     slug = models.CharField(max_length=150)
 
     def save(self, *args, **kwargs):
@@ -49,7 +46,7 @@ class Genero(models.Model):
 class Filme(models.Model):
     titulo = models.CharField(max_length=100)
     duracao = models.IntegerField(blank=True, null=True)
-    capa = models.ImageField(upload_to=get_filename_generator('capa-filmes'))
+    capa = models.ImageField(upload_to=partial(get_filename_generator, 'capa-filmes'))
     sinopse = models.TextField()
     direcao = models.ManyToManyField(Pessoa, related_name='filmes_dirigidos')
     elenco = models.ManyToManyField(Pessoa, related_name='filmes_atuados')
