@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'compression_middleware.middleware.CompressionMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -114,17 +115,6 @@ STORAGES = {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     }
 }
-
-BROTLI_COMPRESS_MIMETYPES = [
-    'text/html',
-    'text/css',
-    'text/plain',
-    'application/javascript',
-    'application/x-javascript',
-    'application/json',
-    'application/xml',
-    'image/svg+xml',
-]
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
